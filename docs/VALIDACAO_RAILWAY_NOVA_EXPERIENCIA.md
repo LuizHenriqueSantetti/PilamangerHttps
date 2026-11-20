@@ -1,103 +1,154 @@
-# Validação da Nova Experiência no Railway — 20/11/2026
+# PilaManager Nova Experiência — relatório final de validação
 
-## Fonte e escopo
+Data: 20/11/2026 (America/Sao_Paulo).
+Endereço: https://pilamanager-web-production.up.railway.app/
+Repositório privado: https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres
 
-Fonte: Site exato indicado pelo usuário, versão 13, commit
-`184b6ea9e5aa24f18ec55cbecb1c35c5f59ea5cb`.
-Não é a aplicação anterior do ZIP. Os resultados anteriores desse ZIP não
-constituem validação desta fonte. O Site original permaneceu intacto.
-Nenhum paciente, usuário ou dado clínico do Site foi importado.
+## Fonte e preservação
 
-A cópia foi adaptada de Workers/D1 para Next.js/Node/PostgreSQL no Railway.
-Foram preservados os arquivos de interface e estilos, sem redesenho.
-Contas, pacientes, profissionais, plano, agenda e valores desta implantação
-são fixtures fictícias de homologação.
+A fonte é a versão 13 do Site indicado pelo proprietário,
+https://pilamanager-nova-experiencia.luizsantetti.chatgpt.site/,
+commit original `184b6ea9e5aa24f18ec55cbecb1c35c5f59ea5cb`.
+Os resultados do ZIP anterior não foram usados como aprovação desta fonte.
+O Site original permaneceu intacto e seus dados e contas não foram importados.
 
-## Verificado de verdade
+A cópia Railway usa Next.js 16.4.5, React 19.2.9 e PostgreSQL, com o schema
+isolado `pilamanager_nova_experiencia`. O design, os estilos e a navegação foram
+preservados. As alterações posteriores na interface corrigiram cálculos, datas
+ou textos dos relatórios; não houve redesenho.
 
-- Dependências instaladas; TypeScript, build e 105 testes existentes executados.
-  A suíte unitária contém mocks: não deve ser confundida com integração real.
-- PostgreSQL local iniciado; migration e seed fictício executados.
-- 62 verificações HTTP locais aprovadas, incluindo persistência de coleções,
-  sessão, logout, rejeição de origem, permissões, inativação e bloqueio de login.
-- 17 verificações financeiras locais aprovadas: recebimento, comissão calculada
-  no servidor, pagamento e rejeição de duplicidades e alterações indevidas.
-- 6 verificações adicionais do adaptador PostgreSQL aprovadas: parâmetros SQL,
-  rollback de lote, persistência de bytes e leitura por nova conexão.
-- Cadastro de paciente feito pela interface local, sem alteração de design.
-- 47 verificações HTTPS aprovadas na fonte correta, com duas contas fictícias:
-  gestão e recepção; sessão independente, senha temporária, cookies Secure,
-  HttpOnly e SameSite=Lax, HSTS, leitura compartilhada e bloqueio de privilégios.
-- Login das duas contas conferido no navegador. Módulos Pacientes, Equipe,
-  Planos, Agendamento, Cobranças, Comissionamento, Financeiro e Relatórios
-  carregaram para gestão. Recepção não apresenta os menus financeiros restritos.
-- Tela móvel emulada em 390x844; lista de paciente aparece em cartões.
-- PostgreSQL online consultado diretamente por SSH: versão 18.6, schema isolado,
-  migration registrada, duas contas e nove coleções na ocasião da inspeção.
-- Dump manual gerado no PostgreSQL online e baixado. Restaurado de verdade em
-  PostgreSQL 17 local, banco temporário, com duas contas e paciente fictício
-  conferidos; o banco temporário foi removido após a verificação.
+## Testes executados de verdade
 
-As evidências detalhadas estão em `test-results/` local, ignorado pelo Git.
-Credenciais e dump estão em arquivos privados locais, nunca neste relatório.
+- 114 testes automatizados, em 23 arquivos, aprovados na versão final local.
+  Parte da suíte é unitária e usa mocks; isso não equivale a integração real.
+- Instalação de dependências, TypeScript e build aprovados.
+- Auditoria de dependências de produção após atualização: zero alertas conhecidos
+  no momento da consulta. O CI também impede publicação com alertas altos/críticos.
+- PostgreSQL local real iniciado, migrations e seed fictício executados.
+- 62 verificações HTTP locais: persistência de coleções, sessão, logout, origem,
+  permissões, inativação, senha temporária e bloqueio após falhas de login.
+- 17 verificações financeiras e seis do adaptador PostgreSQL aprovadas,
+  incluindo duplicidades, cálculo de comissão, transações com rollback,
+  parâmetros SQL, persistência de arquivos e leitura por nova conexão.
+- 47 verificações HTTPS na fonte correta, usando gestão e recepção fictícias.
+  Foram conferidos Secure, HttpOnly, SameSite=Lax, HSTS, permissões e persistência.
+- 20 verificações após troca de implantação: as duas contas, paciente,
+  recebimento e comissão paga persistiram; sessão revogada e restrições da
+  recepção foram verificadas novamente.
+- PostgreSQL online consultado diretamente por SSH: versão 18.6, schema
+  isolado, migration registrada e dados de demonstração presentes.
 
-## Limites e pendências
+## Formulários e PDFs
 
-- Dispositivos físicos distintos não estavam disponíveis; a verificação móvel
-  foi emulação. Duas sessões HTTP e duas contas foram usadas, sem afirmar teste
-  físico em dois computadores/celulares.
-- A navegação não equivale a testar todos os formulários, relatórios PDF,
-  idiomas, acessibilidade, integrações externas e cenários concorrentes.
-- Coleções operacionais continuam no formato JSON original em `app_storage`.
-  Não foi implantada normalização relacional completa de pacientes e agenda.
-- Não foram realizados pentest, teste de carga ou certificação de segurança,
-  LGPD ou aptidão para uso clínico com dados reais.
-- Backup automático, agendamento e recuperação pontual do Railway exigiram
-  Pro na interface desta conta. Nenhum plano pago foi ativado. O dump manual
-  testado é uma cópia pontual, não uma rotina automática.
-- Domínio próprio não foi fornecido e nenhum foi comprado. Foi usado o
-  endereço gratuito do Railway com HTTPS.
-- Repositório privado criado; implantação por CLI. Autodeploy GitHub depende
-  de autorização adicional do GitHub App e permanece pendente.
-- O período de teste e seus créditos são finitos; não se promete 30 dias
-  integrais de funcionamento independentemente do consumo. Não houve upgrade.
+Na interface local ligada ao PostgreSQL, foram realizados:
+criação e edição de plano; cadastro de profissional com comissão de 30% e
+turno; cadastro de paciente com plano, vínculo e cobrança de R$ 320; agendamento
+em horário futuro permitido; confirmação e cancelamento com confirmação
+explícita; recebimento da cobrança e reflexo no Financeiro.
+Também foi conferida a persistência do paciente após reiniciar a aplicação.
 
-Esta é uma demonstração funcional validada nos cenários descritos, sem
-aprovação irrestrita para dados reais.
+Foram baixados pelo navegador dez PDFs: financeiro completo, recibo individual,
+e as oito categorias de Relatórios (geral, pacientes, agendamentos, faltas,
+comissões, receitas, despesas e planos). Todos foram abertos, tiveram texto
+extraído e páginas renderizadas para inspeção visual. Os valores fictícios
+R$ 800 de receitas, R$ 18 de despesas e R$ 782 de saldo foram reconciliados.
+O recibo de R$ 320 e a data civil 20/11/2026 foram conferidos.
+Uma exportação adicional foi feita no HTTPS publicado e renderizada: receitas
+R$ 240, despesas R$ 9 e saldo R$ 231, com a mesma data 20/11/2026 da tela.
 
-## Dependências e preservação visual
+Falhas encontradas e corrigidas:
 
-A auditoria inicial detectou alertas em dependências antigas. Foram atualizados
-Next.js para 16.4.5, React/ReactDOM para 19.2.9 e dependências transitivas corrigidas.
-Vinext foi movido para ferramentas de desenvolvimento, pois o runtime publicado
-é Next.js. `pnpm audit --prod` após a atualização retornou zero alertas em todas
-as severidades no momento da consulta. Isso não equivale a ausência de toda
-vulnerabilidade possível. Os 105 testes passaram novamente após a atualização.
-Foram comparados os 120 arquivos de `src/app` e `src/styles` com a fonte
-original: nenhuma diferença de conteúdo.
+- Datas de transações no PDF apareciam um dia antes no fuso brasileiro.
+- O cabeçalho do PDF era substituído por um título genérico.
+- Totais financeiros mensais eram usados com lançamentos de outros períodos.
+- Indicadores de confirmação/cancelamento ainda continham números fixos.
+- Filtros de período e agrupamentos deslocavam datas civis para o dia/mês anterior.
+- Aulas podiam ser contadas duas vezes em relatórios de profissionais homônimos.
+- Percentuais de planos usavam denominador diferente do total de vínculos.
+- A legenda de assinatura do recibo podia ficar branca e invisível.
+- Foi evitada divisão por zero e normalizada a exibição de percentuais.
+- Os rótulos das transações na tela móvel foram corrigidos para Tipo, Data,
+  Descrição, Categoria e Valor, sem alterar cores ou estrutura dos cartões.
 
-## Confirmação após a publicação final
+Há testes de regressão para datas civis, limites do período, meses diferentes,
+filtros financeiros, profissionais homônimos, vínculos e dados vazios.
 
-- Repositório privado verificado:
-  https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres
-- Código publicado: commit `c7d3622`.
-- Implantação final Railway: `b8e1706b-be19-4ff0-80f0-0e6950450c85`, estado SUCCESS.
-- Logs do servidor confirmaram Next.js 16.4.5 na porta 8080 e healthcheck aprovado.
-- Após essa troca de implantação, mais 20 verificações HTTP passaram. As duas
-  contas continuaram funcionando, o paciente, o recebimento e a comissão paga
-  sobreviveram; as restrições de recepção e a revogação de sessão foram repetidas.
-- O painel HTTPS foi recarregado no navegador após a troca de servidor e manteve
-  sessão, paciente e valores fictícios. Captura: `test-results/nova-experiencia-https.jpg`.
-- O servidor local também foi reiniciado com as dependências atualizadas:
-  17 verificações financeiras e seis do adaptador PostgreSQL passaram novamente.
-  O paciente cadastrado pela interface permaneceu visível após reinício e reload.
-- Build e TypeScript finais aprovados. Auditoria de produção: zero alertas
-  conhecidos no momento da consulta, sem afirmação de certificação de segurança.
-- Dump manual testado: 18.403 bytes; SHA-256
-  `6083DFDD5A4241FFF89826AA739ECC15980718EA9A60086FDE41E15FE9715B0B`.
-- Acesso das duas contas foi guardado em `.private/ACESSO_DEMONSTRACAO.txt`,
-  ignorado pelo Git. Não reutilizar essas contas de homologação com dados reais.
+## Publicação automática
 
-Avisos de peer dependencies e componentes legados (por exemplo Recharts 2)
-continuam presentes. A atualização de bibliotecas visuais para novas versões
-principais não fez parte deste trabalho, para preservar o comportamento visual.
+GitHub Actions foi configurado e executado de verdade. Cada push de código na
+main passa por testes, TypeScript, auditoria e build antes da publicação pela
+CLI oficial. O fluxo aguarda SUCCESS no Railway e confere a API HTTPS correta
+com PostgreSQL e bloqueio de acesso sem autenticação.
+
+O proprietário autorizou expressamente a credencial restrita ao projeto e ao
+ambiente production. Seu escopo foi verificado antes de gravá-la no secret
+RAILWAY_TOKEN do repositório privado. O arquivo temporário foi removido e o
+valor não foi exibido nem adicionado ao Git. Não foi necessário ampliar acesso
+do Railway GitHub App a outros repositórios.
+
+## Backups
+
+A criação de backups nativos do Railway exigiu Pro nesta conta; nenhum plano
+pago foi ativado. Foi configurada uma alternativa local pelo Codex:
+
+- Automação ativa: Backup diário do PilaManager, diariamente às 21h, fuso de São Paulo.
+- Script: scripts/backup-railway.mjs.
+- Copia somente o schema desta aplicação para .private/backups/.
+- Valida o arquivo com pg_restore e registra data, tamanho e SHA-256.
+- Não apaga backups anteriores e não exibe conteúdo do banco ou credenciais.
+- A rotina foi executada manualmente com sucesso. Esse novo dump de 19.262 bytes
+  foi restaurado de verdade em PostgreSQL 17 local temporário, com duas contas
+  e paciente fictício conferidos. O banco temporário foi removido após o teste.
+- SHA-256 dessa execução:
+  eadd2ba6ef667f1502354d37fad915e024d3a74e5cc8fe0c71d324e66056982b.
+
+A primeira execução agendada futura ainda não foi observada. A rotina depende
+deste computador/Codex disponíveis, autenticação, rede e créditos Railway.
+Não equivale a backup gerenciado independente do computador ou recuperação
+pontual. Os dumps e as chaves ficam fora do Git.
+
+## Aparelhos, domínio e prazo gratuito
+
+O proprietário informou que já realizou os testes nos aparelhos. Esse item foi
+registrado como concluído pelo usuário, sem alegar execução física pelo agente.
+Também houve teste próprio em viewport móvel emulado de 390x844.
+
+O proprietário escolheu manter o endereço gratuito do Railway com HTTPS.
+Portanto, domínio próprio não é mais uma pendência desta entrega. Nada foi comprado.
+
+A hospedagem permanece no trial existente. Depois do prazo ou dos créditos,
+a continuidade precisa ser tratada no painel: a documentação atual prevê
+transição para Free e redeploy, com crédito mensal e suspensão ao atingir seu
+limite, ou contratação de outro plano. Não foi antecipado um downgrade que
+encerrasse o teste, nem autorizado qualquer pagamento. Não há promessa de
+operação ininterrupta e gratuita após o trial.
+Referência: https://docs.railway.com/pricing/free-plan
+
+## Limites desta validação
+
+Os cenários acima foram efetivamente exercitados; não se afirma teste de toda
+combinação de dados ou de todos os formulários secundários. Não houve pentest,
+teste de carga, ensaio de recuperação de desastre com indisponibilidade total,
+certificação LGPD ou aprovação irrestrita para uso clínico com dados reais.
+Coleções operacionais mantêm o formato JSON original em app_storage, sem
+normalização relacional completa. Relatórios extensos com muitas páginas e
+intervalos de vários anos não foram homologados exaustivamente.
+
+A implantação continua de demonstração. As contas fictícias e DEMO_MODE não
+substituem o preparo de contas definitivas antes de eventual uso com dados reais.
+Evidências detalhadas: test-results/ local (ignorado pelo Git).
+Credenciais: .private/ACESSO_DEMONSTRACAO.txt (ignorado pelo Git).
+
+## Confirmação final da entrega
+
+- Commit de código publicado: `4026756bad34d902e089796d7f5a0506c26db5fb`.
+- Execução CI/CD final concluída com sucesso:
+  https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres/actions/runs/44833332865
+- Implantação Railway: `223abb3c-044f-466a-be81-78b868fd8f20`.
+- As 20 verificações posteriores à implantação foram repetidas com sucesso.
+- Os cinco rótulos móveis foram conferidos no HTTPS real, em viewport natural
+  de 544x1074: Tipo, Data, Descrição, Categoria e Valor. Os textos calculados
+  pelo CSS foram comparados com os rótulos esperados.
+- Captura final: `test-results/publicacao-final-financeiro.jpg`.
+- A primeira execução futura agendada do backup permanece futura; sua rotina
+  foi testada agora, sem afirmar que um agendamento ainda não ocorrido executou.
