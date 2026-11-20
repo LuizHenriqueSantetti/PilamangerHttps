@@ -75,3 +75,29 @@ as severidades no momento da consulta. Isso não equivale a ausência de toda
 vulnerabilidade possível. Os 105 testes passaram novamente após a atualização.
 Foram comparados os 120 arquivos de `src/app` e `src/styles` com a fonte
 original: nenhuma diferença de conteúdo.
+
+## Confirmação após a publicação final
+
+- Repositório privado verificado:
+  https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres
+- Código publicado: commit `c7d3622`.
+- Implantação final Railway: `b8e1706b-be19-4ff0-80f0-0e6950450c85`, estado SUCCESS.
+- Logs do servidor confirmaram Next.js 16.4.5 na porta 8080 e healthcheck aprovado.
+- Após essa troca de implantação, mais 20 verificações HTTP passaram. As duas
+  contas continuaram funcionando, o paciente, o recebimento e a comissão paga
+  sobreviveram; as restrições de recepção e a revogação de sessão foram repetidas.
+- O painel HTTPS foi recarregado no navegador após a troca de servidor e manteve
+  sessão, paciente e valores fictícios. Captura: `test-results/nova-experiencia-https.jpg`.
+- O servidor local também foi reiniciado com as dependências atualizadas:
+  17 verificações financeiras e seis do adaptador PostgreSQL passaram novamente.
+  O paciente cadastrado pela interface permaneceu visível após reinício e reload.
+- Build e TypeScript finais aprovados. Auditoria de produção: zero alertas
+  conhecidos no momento da consulta, sem afirmação de certificação de segurança.
+- Dump manual testado: 18.403 bytes; SHA-256
+  `6083DFDD5A4241FFF89826AA739ECC15980718EA9A60086FDE41E15FE9715B0B`.
+- Acesso das duas contas foi guardado em `.private/ACESSO_DEMONSTRACAO.txt`,
+  ignorado pelo Git. Não reutilizar essas contas de homologação com dados reais.
+
+Avisos de peer dependencies e componentes legados (por exemplo Recharts 2)
+continuam presentes. A atualização de bibliotecas visuais para novas versões
+principais não fez parte deste trabalho, para preservar o comportamento visual.
