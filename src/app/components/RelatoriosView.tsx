@@ -544,7 +544,7 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
                 { label: 'Total Professores', value: String(dadosGerais.totalProfessores), color: P },
                 { label: 'Ativos',            value: String(dadosGerais.professoresAtivos), color: '#35A978' },
                 { label: 'Total de Aulas',    value: String(dadosGerais.aulasRealizadas),   color: P },
-                { label: 'Média/Professor',   value: String(Math.round(dadosGerais.aulasRealizadas / dadosGerais.professoresAtivos)), sub: 'aulas/mês', color: '#35A978' },
+                { label: 'Média/Professor',   value: String(dadosGerais.professoresAtivos ? Math.round(dadosGerais.aulasRealizadas / dadosGerais.professoresAtivos) : 0), sub: 'aulas/mês', color: '#35A978' },
               ]} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <div>
@@ -610,8 +610,8 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
               <KpiRow items={[
                 { label: 'Aulas Realizadas', value: String(dadosGerais.aulasRealizadas),  color: P },
                 { label: 'Taxa de Ocupação', value: `${dadosGerais.taxaOcupacao}%`,       color: '#35A978' },
-                { label: 'Confirmados',      value: '2.840',  sub: '87,6% do total',      color: '#35A978' },
-                { label: 'Cancelamentos',    value: '120',    sub: '3,7% do total',        color: '#D95C5C' },
+                { label: 'Confirmados',      value: String(liveData.appointmentSummary.confirmados), sub: `${formatPercent(liveData.appointmentSummary.total ? liveData.appointmentSummary.confirmados / liveData.appointmentSummary.total * 100 : 0)} do total`, color: '#35A978' },
+                { label: 'Cancelamentos',    value: String(liveData.appointmentSummary.cancelados), sub: `${formatPercent(liveData.appointmentSummary.total ? liveData.appointmentSummary.cancelados / liveData.appointmentSummary.total * 100 : 0)} do total`, color: '#D95C5C' },
               ]} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <div>

@@ -4,13 +4,14 @@ import { readFinancialLedger } from './financialLedger';
 function read<T>(key: string, fallback: T): T {
   try { return JSON.parse(localStorage.getItem(key) || '') as T; } catch { return fallback; }
 }
+const civilDate = (value: string) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T12:00:00` : value);
 
 export function getReportData(startValue: string, endValue: string, colors: string[]) {
   const start = new Date(`${startValue}T00:00:00`);
   const end = new Date(`${endValue}T23:59:59`);
   const inPeriod = (value?: string) => {
     if (!value) return true;
-    const date = new Date(value);
+    const date = civilDate(value);
     return !Number.isNaN(date.getTime()) && date >= start && date <= end;
   };
   const allPatients = read<any[]>('pacientes', []);
@@ -46,13 +47,13 @@ export function getReportData(startValue: string, endValue: string, colors: stri
   });
   const matriculasMensais = months.map((mes, month) => ({
     mes,
-    novos: patients.filter(item => new Date(item.dataCadastro).getMonth() === month).length,
-    cancelamentos: allPatients.filter(item => item.status !== 'ativo' && item.historicoStatus?.some((history: any) => new Date(history.data).getMonth() === month)).length,
-    ativos: allPatients.filter(item => item.status === 'ativo' && new Date(item.dataCadastro) <= new Date(start.getFullYear(), month + 1, 0)).length,
+    novos: patients.filter(item => civilDate(item.dataCadastro).getMonth() === month).length,
+    cancelamentos: allPatients.filter(item => item.status !== 'ativo' && item.historicoStatus?.some((history: any) => civilDate(history.data).getMonth() === month)).length,
+    ativos: allPatients.filter(item => item.status === 'ativo' && civilDate(item.dataCadastro) <= new Date(start.getFullYear(), month + 1, 0, 23, 59, 59)).length,
   }));
   const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
   const ocupacaoDiaSemana = dayNames.map((dia, day) => {
-    const items = appointments.filter(item => Number(item.day ?? new Date(item.data || item.date).getDay()) === day);
+    const items = appointments.filter(item => Number(item.day ?? civilDate(item.data || item.date).getDay()) === day);
     const cancelados = items.filter(item => ['cancelado', 'falta'].includes(String(item.status).toLowerCase())).length;
     const aulas = items.length - cancelados;
     return { dia, ocupacao: items.length ? Math.round((aulas / items.length) * 100) : 0, aulas, cancelados };
@@ -65,6 +66,7 @@ export function getReportData(startValue: string, endValue: string, colors: stri
   const activePatients = allPatients.filter(item => item.status === 'ativo').length;
   const confirmed = appointments.filter(item => item.status === 'confirmado').length;
   return {
+    appointmentSummary: { total: appointments.length, confirmados: statusAgendamentos[0].value, pendentes: statusAgendamentos[1].value, cancelados: statusAgendamentos[2].value },
     dadosGerais: { totalAlunos: allPatients.length, alunosAtivos: activePatients, alunosNovos: patients.length, taxaRetencao: allPatients.length ? activePatients / allPatients.length * 100 : 0, receitaTotal, receitaMensal: receitaTotal / 12, despesaTotal, lucroLiquido: receitaTotal - despesaTotal, totalProfessores: professionals.length, professoresAtivos: professionals.filter(item => item.status === 'ativo').length, aulasRealizadas: confirmed, taxaOcupacao: appointments.length ? confirmed / appointments.length * 100 : 0 },
     receitaMensal, despesasCategorias, matriculasMensais, planoDistribuicao, professoresData, ocupacaoDiaSemana, statusAgendamentos,
     hasAnyData: Boolean(allPatients.length || appointments.length || payments.length || plans.length || professionals.length),
