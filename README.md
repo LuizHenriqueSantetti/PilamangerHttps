@@ -8,6 +8,14 @@ Sistema de gestão para estúdios de Pilates, desenvolvido durante o semestre. R
 - [Quadro do Trello](https://trello.com/b/tFTm4z72/pilamanager-21)
 - [GitHub do projeto](https://github.com/LuizHenriqueSantetti/PilamangerHttps)
 
+## Acesso para demonstração
+
+- **Site:** https://pilamanager-web-production.up.railway.app/
+- **Login:** `gestao.nova.online@example.invalid`
+- **Senha:** `Nova!65OD19AkMUcefC1biWzfnR99I8uuxSSq`
+
+Conta compartilhada para avaliação do projeto, com dados fictícios.
+
 ## Funcionamento
 
 O cadastro de um paciente com plano gera o vínculo e a cobrança. A agenda considera os horários dos profissionais. Recebimentos e comissões aparecem no Financeiro e nos relatórios em PDF.
