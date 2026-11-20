@@ -53,11 +53,21 @@ segurança ou homologação clínica completa. O projeto não possui ESLint conf
 ## Operação e backup
 
 Não foi ativado plano pago. O endereço Railway fornece HTTPS sem compra de domínio.
-O trial não oferece criação de backups automáticos nesta conta; foi produzido e
-restaurado um dump manual de demonstração, guardado em `.private/` fora do Git.
+O trial não oferece backups nativos nesta conta. Foi configurado um backup
+diário local pelo Codex às 21h (America/Sao_Paulo), com `scripts/backup-railway.mjs`.
+Depende deste computador/Codex disponíveis, rede e autenticação Railway ativa.
+Cada dump fica em `.private/backups/`, é validado com pg_restore e recebe SHA-256.
+Nenhum backup é apagado automaticamente. Uma execução já foi restaurada de verdade.
 O script `verify-backup-local.mjs` restaura esse dump somente em banco temporário
 local e remove exclusivamente o banco temporário que ele próprio cria.
 
-A publicação usa upload autenticado pela CLI oficial. O repositório é privado;
-a conexão de autodeploy pelo GitHub depende de permissão adicional do Railway
-GitHub App e não foi habilitada. Não publique `.env*`, `.private/`, dumps ou chaves.
+A publicação automática usa GitHub Actions e a CLI oficial após testes, TypeScript,
+auditoria de produção e build. O proprietário autorizou uma credencial limitada
+ao projeto/ambiente production, guardada somente no secret `RAILWAY_TOKEN` do
+repositório privado. O fluxo aguarda o Railway ficar saudável e confere HTTPS e
+autenticação. A primeira execução real passou. Não há dependência de autorizar
+o Railway GitHub App. Não publique `.env*`, `.private/`, dumps ou chaves.
+
+O trial termina ao consumir os créditos ou o prazo. Nenhum plano pago foi ativado.
+O plano Free exige transição pelo painel e redeploy; tem limites e pode suspender
+o serviço quando seu crédito mensal acaba. Isso não é garantia de operação contínua.

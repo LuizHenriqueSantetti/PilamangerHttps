@@ -1,5 +1,10 @@
 export type FinancialEntry = { id: string; data: string; descricao: string; tipo: string; valor: number; categoria: string };
 type RecordData = Record<string, any>;
+export function summarizeFinancialEntries(entries: FinancialEntry[]) {
+  const receitas = entries.filter(item => item.tipo === 'receita').reduce((sum, item) => sum + item.valor, 0);
+  const despesas = entries.filter(item => item.tipo === 'despesa').reduce((sum, item) => sum + item.valor, 0);
+  return { receitas, despesas, lucro: receitas - despesas };
+}
 export function buildFinancialLedger(transactions: RecordData[], payments: RecordData[], commissions: RecordData[]): FinancialEntry[] {
   const result = new Map<string, FinancialEntry>();
   const add = (key: string, item: RecordData, tipo: string, fallback: string) => {

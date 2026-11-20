@@ -1,5 +1,5 @@
 import { ModulePermission } from '../utils/permissions';
-import { readFinancialLedger } from '../services/financialLedger';
+import { readFinancialLedger, summarizeFinancialEntries } from '../services/financialLedger';
 import { formatCalendarDate } from '../utils/calendarDate';
 import { useState, useEffect, useMemo } from 'react';
 import { DollarSign, TrendingUp, TrendingDown, Download, Filter, FileText, Receipt, X, ArrowUpRight, ArrowDownRight } from 'lucide-react';
@@ -77,12 +77,10 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
 
   const handleExportarRelatorioCompleto = () => {
     if (!transacoesFiltradas.length) { alert('Nao existem transacoes para gerar o relatorio.'); return; }
-    const monthLabel = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+    const resumo = summarizeFinancialEntries(transacoesFiltradas);
     exportarRelatorioFinanceiroPDF({
-      mes: monthLabel,
-      receitas: receitasMesAtual,
-      despesas: despesasMesAtual,
-      lucro: receitasMesAtual - despesasMesAtual,
+      mes: `Histórico - ${filtroTipo === 'todos' ? 'movimentações' : filtroTipo}`,
+      ...resumo,
       transacoes: transacoesFiltradas
     });
     setShowExportModal(false);
@@ -368,7 +366,7 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
                     Relatório Completo PDF
                   </p>
                   <p className="text-xs" style={{ color: textSecondary }}>
-                    Todas as comissões do período
+                    Movimentações exibidas e seus totais
                   </p>
                 </div>
                 <Download className="w-4 h-4 flex-shrink-0" style={{ color: '#D95C5C' }} />

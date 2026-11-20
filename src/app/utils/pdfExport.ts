@@ -2,6 +2,7 @@ import { notify } from './notifications';
 import { savePdfDocument } from './pdfDelivery';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { formatCalendarDate } from './calendarDate';
 
 const MARGIN = 14;
 const PAGE_W = 210;
@@ -9,6 +10,7 @@ const PAGE_H = 297;
 const PRIMARY: [number, number, number] = [3, 140, 140];
 const TEXT: [number, number, number] = [31, 60, 60];
 const MUTED: [number, number, number] = [96, 123, 121];
+const documentHeaders = new WeakMap<jsPDF, { title: string; subtitle?: string }>();
 
 function clinicIdentity() {
   try {
@@ -59,6 +61,7 @@ function footer(doc: jsPDF) {
 
 function createDoc(title: string, subtitle?: string) {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  documentHeaders.set(doc, { title, subtitle });
   header(doc, title, subtitle);
   return doc;
 }
@@ -95,7 +98,10 @@ function table(doc: jsPDF, options: { startY?: number; head: string[][]; body: u
     },
     alternateRowStyles: { fillColor: [248, 250, 252] },
     columnStyles: options.columnStyles,
-    didDrawPage: () => header(doc, (doc as any).getProperties?.()?.title || 'Relatorio'),
+    didDrawPage: () => {
+      const details = documentHeaders.get(doc);
+      header(doc, details?.title || 'Relatorio', details?.subtitle);
+    },
   });
 }
 
@@ -223,7 +229,7 @@ export const exportarRelatorioFinanceiroPDF = (dados: {
     startY: ((doc as any).lastAutoTable?.finalY ?? 58) + 8,
     head: [['Data', 'Descricao', 'Categoria', 'Tipo', 'Valor']],
     body: dados.transacoes.map(t => [
-      t.data ? new Date(t.data).toLocaleDateString('pt-BR') : '-',
+      t.data ? formatCalendarDate(t.data) : '-',
       t.descricao,
       t.categoria,
       t.tipo === 'receita' ? 'Receita' : 'Despesa',
