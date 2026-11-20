@@ -276,7 +276,7 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="financial-table w-full">
             <thead>
               <tr style={{ backgroundColor: mutedBg }}>
                 <th className="text-left py-2.5 px-5 text-xs font-semibold uppercase tracking-wider" style={{ color: textSecondary }}>Tipo</th>
@@ -289,7 +289,7 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
             <tbody>
               {transacoesFiltradas.map((t, idx) => (
                 <tr key={t.id} className="border-t transition-colors" style={{ borderColor: border, backgroundColor: idx % 2 === 0 ? 'transparent' : (isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)') }}>
-                  <td className="py-3 px-5">
+                  <td className="py-3 px-5" data-label="Tipo">
                     <div
                       className="w-7 h-7 rounded-full flex items-center justify-center"
                       style={{
@@ -301,14 +301,15 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
                         : <ArrowDownRight className="w-3.5 h-3.5" style={{ color: '#D95C5C' }} />
                       }
                     </div>
+                    <span className="sr-only">{t.tipo === 'receita' ? 'Receita' : 'Despesa'}</span>
                   </td>
-                  <td className="py-3 px-4 text-xs" style={{ color: textSecondary }}>
+                  <td className="py-3 px-4 text-xs" style={{ color: textSecondary }} data-label="Data">
                     {formatCalendarDate(t.data)}
                   </td>
-                  <td className="py-3 px-4 text-sm font-medium" style={{ color: textMain }}>
+                  <td className="py-3 px-4 text-sm font-medium" style={{ color: textMain }} data-label="Descrição">
                     {t.descricao}
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-4" data-label="Categoria">
                     <span className="text-xs px-2.5 py-1 rounded-full font-medium" style={{
                       backgroundColor: t.tipo === 'receita' ? 'rgba(53,169,120,0.1)' : 'rgba(217,92,92,0.1)',
                       color: t.tipo === 'receita' ? '#35A978' : '#D95C5C'
@@ -316,7 +317,7 @@ export function FinanceiroView({ isDark, perms }: FinanceiroViewProps) {
                       {t.categoria}
                     </span>
                   </td>
-                  <td className="py-3 px-5 text-right whitespace-nowrap">
+                  <td className="py-3 px-5 text-right whitespace-nowrap" data-label="Valor">
                     <span className="text-sm font-bold" style={{ color: t.tipo === 'receita' ? '#35A978' : '#D95C5C' }}>
                       {t.tipo === 'receita' ? '+' : '−'} R$ {t.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </span>
