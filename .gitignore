@@ -1,0 +1,45 @@
+# Dependências e saídas geradas
+node_modules/
+.sites-runtime/
+outputs/
+.dev.vars
+.dev.vars.*
+.private/
+test-results/
+.next/
+.vinext/
+.wrangler/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Temporários, logs e backups locais
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+logs/
+backups/
+pdf-tests/
+
+# IDE e sistema operacional
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Materiais acadêmicos grandes mantidos fora do Git da aplicação
+docs/estudos/
+docs/entregas/

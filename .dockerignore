@@ -1,0 +1,14 @@
+node_modules
+.git
+.env
+.env.*
+!.env.example
+.next
+.sites-runtime
+.wrangler
+.private
+test-results
+backups
+tests
+docs
+*.log

@@ -1,0 +1,853 @@
+.plan-benefits-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, #038c8c 55%, transparent) transparent;
+  touch-action: pan-y;
+}
+.plan-benefits-scroll::-webkit-scrollbar { width: 6px; }
+.plan-benefits-scroll::-webkit-scrollbar-track { background: transparent; }
+.plan-benefits-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, #038c8c 55%, transparent); border-radius: 999px; }
+
+.pilamanager-header-search {
+  flex: 1 1 420px;
+  max-width: 560px;
+  min-width: 220px;
+}
+
+.pilamanager-main-content {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1023px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  .pilamanager-app-frame {
+    height: 100svh !important;
+    margin-left: 0 !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    width: 100vw !important;
+  }
+
+  .pilamanager-app-frame:has(.pilamanager-main-content [class~="fixed"][class~="inset-0"]) > header {
+    display: none !important;
+  }
+
+  body:has(.pilamanager-main-content [class~="fixed"][class~="inset-0"]) .pilamanager-app-frame > header {
+    display: none !important;
+  }
+
+  .pilamanager-header {
+    height: auto !important;
+    min-height: 56px;
+    padding: calc(10px + env(safe-area-inset-top)) 14px 10px !important;
+  }
+
+  .pilamanager-mobile-switcher {
+    padding: 10px 14px 12px;
+  }
+
+  .pilamanager-main-content {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    max-width: 100vw;
+    overflow-x: hidden !important;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+  }
+
+  .pilamanager-main-content *,
+  .pilamanager-main-content *::before,
+  .pilamanager-main-content *::after {
+    box-sizing: border-box;
+  }
+
+  .pilamanager-main-content > div {
+    padding: 14px !important;
+    max-width: 100vw;
+  }
+
+  .pilamanager-user-menu {
+    position: fixed !important;
+    top: 58px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-height: calc(100svh - 76px);
+    overflow-y: auto;
+  }
+
+  .pilamanager-main-content > div,
+  .pilamanager-main-content article,
+  .pilamanager-main-content section {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .pilamanager-main-content table {
+    min-width: 720px;
+    table-layout: fixed;
+    font-size: 0.86rem;
+  }
+
+  .pilamanager-main-content th,
+  .pilamanager-main-content td {
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .pilamanager-main-content .recharts-wrapper,
+  .pilamanager-main-content .recharts-surface {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+
+  .pilamanager-main-content input,
+  .pilamanager-main-content select,
+  .pilamanager-main-content textarea,
+  .pilamanager-main-content button {
+    font-size: 16px;
+  }
+
+  .pilamanager-main-content input,
+  .pilamanager-main-content select,
+  .pilamanager-main-content textarea {
+    max-width: 100%;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] {
+    position: fixed !important;
+    inset: 0 !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: 12px !important;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: 9999 !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] > div {
+    width: 100% !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100svh - 24px) !important;
+    margin: 0 auto !important;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] form,
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="overflow-y-auto"] {
+    max-width: 100%;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="grid-cols-2"],
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class*="grid-cols-["] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] .professional-section-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="col-span-2"],
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="md:col-span-2"] {
+    grid-column: auto !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] header,
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] footer {
+    padding: 14px !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] footer > div {
+    align-items: stretch !important;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 640px) {
+  .pilamanager-header-search {
+    display: none;
+  }
+
+  .pilamanager-header {
+    align-items: center;
+    min-height: calc(60px + env(safe-area-inset-top));
+  }
+
+  .pilamanager-header > div:first-child {
+    max-width: calc(100vw - 126px);
+  }
+
+  .pilamanager-main-content h1 {
+    font-size: 1.24rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .pilamanager-main-content > div,
+  .pilamanager-main-content .flex,
+  .pilamanager-main-content .grid {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .pilamanager-main-content h2 {
+    font-size: 1.12rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .pilamanager-main-content h3 {
+    font-size: 1rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .pilamanager-main-content [class*="gap-"] {
+    row-gap: 10px;
+  }
+
+  .pilamanager-main-content [class*="p-5"],
+  .pilamanager-main-content [class*="p-6"],
+  .pilamanager-main-content [class*="p-8"] {
+    padding: 14px !important;
+  }
+
+  .pilamanager-main-content [class*="text-2xl"] {
+    font-size: 1.2rem !important;
+  }
+
+  .pilamanager-main-content [class*="text-xl"] {
+    font-size: 1.08rem !important;
+  }
+
+  .pilamanager-main-content [class*="rounded-2xl"] {
+    border-radius: 14px !important;
+  }
+
+  .pilamanager-main-content [class*="w-56"],
+  .pilamanager-main-content [class*="w-72"],
+  .pilamanager-main-content [class*="w-80"],
+  .pilamanager-main-content [class*="w-96"] {
+    width: 100% !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] {
+    inset: 0 !important;
+    padding: 10px !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] > div {
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100svh - 20px) !important;
+    border-radius: 18px !important;
+  }
+
+  .accessibility-menu-panel {
+    position: fixed !important;
+    top: calc(66px + env(safe-area-inset-top)) !important;
+    right: 10px !important;
+    left: 10px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: calc(100svh - 78px - env(safe-area-inset-top)) !important;
+    margin-top: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    z-index: 10000 !important;
+  }
+
+  .accessibility-menu-panel button,
+  .accessibility-menu-panel span,
+  .accessibility-menu-panel p {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .config-modal-overlay {
+    align-items: stretch !important;
+  }
+
+  .config-modal-dialog {
+    display: flex !important;
+    flex-direction: column !important;
+    height: calc(100svh - 20px) !important;
+    max-height: calc(100svh - 20px) !important;
+    overflow: hidden !important;
+    touch-action: pan-y;
+  }
+
+  .config-modal-sidebar {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(3, 140, 140, 0.22);
+  }
+
+  .config-modal-sidebar > div:first-child {
+    padding: 14px !important;
+  }
+
+  .config-modal-desktop-nav {
+    display: none !important;
+  }
+
+  .config-modal-mobile-nav {
+    display: block !important;
+  }
+
+  .config-modal-content {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .config-modal-content > div:first-child {
+    padding: 12px 14px !important;
+  }
+
+  .config-modal-scroll,
+  .config-modal-tab-body {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    touch-action: pan-y;
+  }
+
+  .config-modal-tab-body {
+    padding: 14px !important;
+  }
+
+  .config-modal-tab-body input,
+  .config-modal-tab-body select,
+  .config-modal-tab-body textarea,
+  .config-modal-tab-body button,
+  .config-modal-tab-body p,
+  .config-modal-tab-body span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .config-modal-tab-body .grid-cols-2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .professional-form-dialog,
+  .appointment-form-dialog {
+    overflow-x: hidden !important;
+  }
+
+  .professional-form-body,
+  .appointment-form-scroll {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+  }
+
+  .professional-form-body *,
+  .appointment-form-scroll * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .professional-form-body [class*="grid-cols-["] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .professional-form-body input,
+  .professional-form-body select,
+  .professional-form-body textarea {
+    width: 100% !important;
+  }
+
+  .professional-form-body button,
+  .professional-form-body p,
+  .professional-form-body span {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .appointment-form-fields {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .appointment-form-fields > * {
+    grid-column: auto !important;
+  }
+
+  .appointment-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .appointment-stats > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .appointment-stats > div {
+    min-width: 0;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .report-kpi-value {
+    display: block;
+    max-width: 100%;
+    font-size: 1.05rem !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .finance-chart {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .team-view-toggle {
+    justify-self: start;
+    width: auto !important;
+  }
+
+  .team-results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .team-results-grid .team-professional-card {
+    min-width: 0;
+    padding: 12px !important;
+  }
+
+  .team-results-grid .team-professional-card [class*="min-w-["] {
+    min-width: 0 !important;
+  }
+
+  .team-results-grid .team-professional-card h2,
+  .team-results-grid .team-professional-card p {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
+  .team-results-grid .team-professional-card > div > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .team-results-grid .team-professional-card > div > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] .professional-section-tabs button {
+    min-width: 0;
+    padding: 10px 6px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .pilamanager-main-content .recharts-responsive-container,
+  .pilamanager-main-content .recharts-wrapper {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .pilamanager-main-content .recharts-surface {
+    display: block;
+    width: 100% !important;
+  }
+
+  .pilamanager-main-content .recharts-cartesian-axis-tick text {
+    font-size: 10px;
+  }
+
+  .pilamanager-main-content .recharts-tooltip-wrapper {
+    max-width: calc(100vw - 48px) !important;
+    white-space: normal !important;
+  }
+
+  .pilamanager-main-content .recharts-legend-wrapper {
+    max-width: 100% !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="px-6"],
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="p-6"],
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] [class~="p-5"] {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] footer > div,
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] footer > div > div {
+    width: 100%;
+  }
+
+  .pilamanager-main-content [class~="fixed"][class~="inset-0"] footer button {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] table {
+    min-width: 100%;
+    display: block;
+    font-size: 0.9rem;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] thead {
+    display: none;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] tbody {
+    display: grid;
+    gap: 10px;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] tr {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid rgba(3, 140, 140, 0.16) !important;
+    border-radius: 14px;
+    background-color: rgba(3, 140, 140, 0.035) !important;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 0 !important;
+    border: 0 !important;
+    text-align: right !important;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td::before {
+    content: "Campo";
+    flex: 0 0 auto;
+    color: #607B79;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(1)::before { content: "Nome"; }
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(2)::before { content: "Quantidade"; }
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(3)::before { content: "Valor"; }
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(4)::before { content: "Tipo"; }
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(5)::before { content: "Total"; }
+  .pilamanager-main-content [class~="overflow-x-auto"] td:nth-child(6)::before { content: "Status"; }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td > * {
+    max-width: 64%;
+    min-width: 0;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td .flex {
+    justify-content: flex-end;
+    min-width: 0 !important;
+    max-width: 66% !important;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td .flex > * {
+    min-width: 0;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] td .flex p,
+  .pilamanager-main-content [class~="overflow-x-auto"] td .flex span {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] {
+    overflow-x: visible;
+  }
+
+  .pilamanager-main-content [class~="overflow-x-auto"] * {
+    max-width: 100%;
+  }
+
+  .accessibility-menu-panel {
+    left: 50% !important;
+    right: auto !important;
+    width: calc(100dvw - 20px) !important;
+    max-width: calc(100dvw - 20px) !important;
+    transform: translateX(-50%) !important;
+    contain: layout paint;
+  }
+
+  .accessibility-menu-panel > div:first-child {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .accessibility-menu-panel > div:first-child button {
+    min-width: 64px;
+    white-space: nowrap;
+  }
+
+  .accessibility-menu-panel button,
+  .accessibility-menu-panel span,
+  .accessibility-menu-panel p {
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .accessibility-menu-panel button > span:first-child,
+  .accessibility-menu-panel button > span:last-child {
+    flex-shrink: 0;
+  }
+
+  .config-modal-close {
+    top: 10px !important;
+    right: 10px !important;
+  }
+
+  .config-modal-sidebar > div:first-child {
+    min-height: 56px;
+    padding-right: 58px !important;
+  }
+
+  .config-modal-section-header {
+    padding-right: 14px !important;
+  }
+
+  .permissions-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-x: hidden !important;
+    touch-action: pan-y;
+  }
+
+  .permissions-role-list {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(3, 140, 140, 0.18);
+  }
+
+  .permissions-role-options {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px;
+    padding: 6px !important;
+  }
+
+  .permissions-role-options button {
+    border-radius: 10px;
+  }
+
+  .permissions-detail,
+  .permissions-matrix {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .permissions-role-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px !important;
+  }
+
+  .permissions-role-header > div:last-child {
+    justify-content: flex-start !important;
+  }
+
+  .permissions-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .permissions-table thead {
+    display: none !important;
+  }
+
+  .permissions-table tbody {
+    display: grid !important;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .permissions-table tr {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid rgba(3, 140, 140, 0.16) !important;
+    border-radius: 12px;
+  }
+
+  .permissions-table td {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    padding: 5px 0 !important;
+    text-align: right !important;
+  }
+
+  .permissions-table td::before {
+    content: attr(data-label);
+    color: #607b79;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .permissions-table .permissions-module-name {
+    grid-column: 1 / -1;
+    display: block !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(3, 140, 140, 0.12) !important;
+    text-align: left !important;
+  }
+
+  .permissions-table .permissions-module-name::before {
+    display: none;
+  }
+
+  .permissions-table td button {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  .commission-table-scroll {
+    overflow-x: hidden !important;
+    touch-action: pan-y;
+  }
+
+  .commission-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .commission-table td::before {
+    content: attr(data-label) !important;
+  }
+
+  .commission-table .commission-professional {
+    justify-content: flex-start !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(3, 140, 140, 0.12) !important;
+  }
+
+  .commission-table .commission-professional::before {
+    display: none;
+  }
+
+  .commission-table .commission-professional > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+  }
+
+  .commission-table .commission-professional > div > div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+    flex: 0 0 32px !important;
+  }
+
+  .commission-table .commission-actions button {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  .professional-form-overlay {
+    padding: 8px !important;
+    overflow: hidden !important;
+    align-items: stretch !important;
+    touch-action: pan-y;
+  }
+
+  .professional-form-dialog {
+    height: calc(100dvh - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    margin: 0 !important;
+    overscroll-behavior: contain;
+  }
+
+  .professional-form-header {
+    position: relative !important;
+    top: auto !important;
+    z-index: 3;
+    flex: 0 0 auto;
+    padding-right: 12px !important;
+  }
+
+  .professional-form-close {
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .professional-form-body {
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    padding: 14px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .professional-form-body input,
+  .professional-form-body select,
+  .professional-form-body textarea {
+    min-height: 44px;
+    font-size: 16px !important;
+  }
+
+  .professional-form-dialog footer {
+    position: relative !important;
+    bottom: auto !important;
+    z-index: 3;
+    flex: 0 0 auto;
+    background: inherit;
+  }
+
+  .professional-form-dialog footer > div > div {
+    display: grid !important;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr);
+    gap: 8px;
+    margin-left: 0 !important;
+  }
+
+  .professional-form-dialog footer button {
+    min-width: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
