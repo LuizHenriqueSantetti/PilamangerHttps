@@ -6,7 +6,7 @@ Sistema de gestão para estúdios de Pilates, desenvolvido durante o semestre. R
 
 - [Acessar o sistema](https://pilamanager-web-production.up.railway.app/)
 - [Quadro do Trello](https://trello.com/b/tFTm4z72/pilamanager-21)
-- [GitHub do projeto](https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres)
+- [GitHub do projeto](https://github.com/LuizHenriqueSantetti/PilamangerHttps)
 
 ## Funcionamento
 
@@ -40,11 +40,3 @@ pnpm dev
 ```
 
 Abra http://127.0.0.1:3102 com a conta configurada. As atualizações do banco ficam em `postgres`; as telas e regras do sistema ficam em `src/app`.
-
-A versão publicada é de demonstração, com dados fictícios e acesso por conta autorizada. Senhas e configurações locais ficam fora do GitHub.
-
-## Autoria e créditos
-
-Projeto de **Luiz Henrique Santetti**.
-
-Créditos da base original do Figma Make: componentes [shadcn/ui](https://ui.shadcn.com/) sob a [licença MIT](https://github.com/shadcn-ui/ui/blob/main/LICENSE.md) e imagens [Unsplash](https://unsplash.com), conforme sua [licença](https://unsplash.com/license).
