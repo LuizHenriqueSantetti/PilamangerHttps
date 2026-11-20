@@ -8,39 +8,43 @@ Sistema de gestão para estúdios de Pilates, desenvolvido durante o semestre. R
 - [Quadro do Trello](https://trello.com/b/tFTm4z72/pilamanager-21)
 - [GitHub do projeto](https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres)
 
-![Visão geral do PilaManager](docs/imagens/visao-geral.jpg)
+## Funcionamento
 
-## Como funciona
+O cadastro de um paciente com plano gera o vínculo e a cobrança. A agenda considera os horários dos profissionais. Recebimentos e comissões aparecem no Financeiro e nos relatórios em PDF.
 
-O paciente pode ser cadastrado com um plano, que gera o vínculo e a cobrança. A agenda considera os horários dos profissionais. Os recebimentos e as comissões aparecem no Financeiro e podem ser consultados nos relatórios em PDF.
+Cada conta tem um perfil de acesso. O sistema funciona no computador e no celular, com modo claro e escuro.
 
-Cada conta tem um perfil de acesso. A aplicação funciona no computador e no celular e tem modo claro e escuro.
+## Ferramentas utilizadas
 
-## Ferramentas
+- **Trello:** organização das tarefas do semestre.
+- **Figma Make:** base das primeiras telas do protótipo.
+- **Git e GitHub:** código e histórico das alterações.
+- **TypeScript, React, Next.js e Tailwind CSS:** programação e telas.
+- **Node.js e PostgreSQL:** funcionamento no servidor e armazenamento dos dados.
+- **Railway, Docker e GitHub Actions:** hospedagem e publicação automática.
+- **ChatGPT e Codex:** apoio ao desenvolvimento e à revisão do projeto.
 
-Trello para organizar as tarefas, Figma Make na base do protótipo, Git e GitHub para guardar o código e Railway para publicar a aplicação.
+O banco atual é PostgreSQL, hospedado no Railway. Os cadastros dos módulos ficam agrupados na tabela `app_storage`, em formato JSON. Separar cada módulo em uma tabela própria é uma melhoria futura.
 
-O sistema usa TypeScript, React, Next.js, Node.js e Tailwind CSS. O banco atual é PostgreSQL. ChatGPT e Codex foram usados como apoio ao desenvolvimento e aos testes.
+## Executar no computador
 
-## Documentação
+É necessário ter Node.js 22, pnpm e um banco PostgreSQL de teste. Copie `.env.example` para `.env` e preencha o endereço do banco em `DATABASE_URL`.
 
-- [Ferramentas utilizadas](docs/FERRAMENTAS.md)
-- [Banco de dados](docs/BANCO_DE_DADOS.md)
-- [Como executar no computador](docs/COMO_RODAR.md)
-- [Publicação e backup](docs/OPERACAO.md)
-- [Testes realizados](docs/TESTES.md)
+Para criar uma conta fictícia local, configure `DEMO_MODE=true`, `DEMO_ADMIN_EMAIL` e `DEMO_ADMIN_PASSWORD`. Use uma senha de pelo menos 16 caracteres, com maiúsculas, minúsculas, números e símbolo.
 
-## Pastas principais
+```sh
+pnpm install --frozen-lockfile
+pnpm db:migrate
+node scripts/bootstrap-postgres.mjs
+pnpm dev
+```
 
-| Pasta | Conteúdo |
-| --- | --- |
-| `src/app` | Telas e regras de uso. |
-| `app/api` e `src/server` | Pedidos ao servidor, acesso e gravação dos dados. |
-| `postgres` | Estrutura do banco atual. |
-| `tests` | Testes automatizados. |
-| `scripts` | Rotinas de banco, publicação e backup. |
-| `docs` | Documentação e imagem do sistema. |
+Abra http://127.0.0.1:3102 com a conta configurada. As atualizações do banco ficam em `postgres`; as telas e regras do sistema ficam em `src/app`.
 
-A publicação é uma demonstração com dados fictícios e exige uma conta autorizada.
+A versão publicada é de demonstração, com dados fictícios e acesso por conta autorizada. Senhas e configurações locais ficam fora do GitHub.
 
-Projeto de **Luiz Henrique Santetti**. [Créditos da base visual](ATTRIBUTIONS.md).
+## Autoria e créditos
+
+Projeto de **Luiz Henrique Santetti**.
+
+Créditos da base original do Figma Make: componentes [shadcn/ui](https://ui.shadcn.com/) sob a [licença MIT](https://github.com/shadcn-ui/ui/blob/main/LICENSE.md) e imagens [Unsplash](https://unsplash.com), conforme sua [licença](https://unsplash.com/license).

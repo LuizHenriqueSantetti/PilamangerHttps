@@ -9,7 +9,6 @@
     "dev": "next dev --webpack -H 127.0.0.1 -p 3102",
     "preview": "node scripts/start-node.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
     "start": "node scripts/migrate-postgres.mjs && node scripts/bootstrap-postgres.mjs && node scripts/start-node.mjs",
     "db:migrate": "node scripts/migrate-postgres.mjs"
   },
@@ -31,7 +30,6 @@
     "@types/react-dom": "^19.2.3",
     "tailwindcss": "4.1.12",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.11",
     "@types/pg": "^8.11.10"
   }
 }

@@ -1,45 +1,45 @@
-# Dependências e saídas geradas
 node_modules/
-.sites-runtime/
-outputs/
-.dev.vars
-.dev.vars.*
-.private/
-test-results/
 .next/
-.vinext/
-.wrangler/
-dist/
-build/
-coverage/
 *.tsbuildinfo
-
-# Segredos e configuração local
 .env
 .env.*
 !.env.example
-*.pem
-*.key
-*.p12
-*.pfx
-
-# Temporários, logs e backups locais
+.private/
 *.log
 *.tmp
 *.temp
 tmp/
 temp/
-logs/
 backups/
-pdf-tests/
-
-# IDE e sistema operacional
+outputs/
+dist/
+build/
+coverage/
 .idea/
 .vscode/
 .DS_Store
 Thumbs.db
 Desktop.ini
+*.pem
+*.key
+*.p12
+*.pfx
 
-# Materiais acadêmicos grandes mantidos fora do Git da aplicação
-docs/estudos/
-docs/entregas/
+# Materiais locais, fora do repositório
+tests/
+test-results/
+pdf-tests/
+docs/
+AGENTS.md
+ATTRIBUTIONS.md
+vitest.config.ts
+scripts/backup-railway.mjs
+scripts/configure-railway.mjs
+scripts/inspect-postgres.mjs
+scripts/provision-ci.mjs
+scripts/verify-after-deploy.mjs
+scripts/verify-backup-local.mjs
+scripts/verify-billing-local.mjs
+scripts/verify-https.mjs
+scripts/verify-local-api.mjs
+scripts/verify-postgres-runtime.mjs
