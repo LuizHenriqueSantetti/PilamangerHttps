@@ -172,6 +172,7 @@ export async function exportarReciboPagamentoPDF(dados: {
   const y = Math.min(235, ((doc as any).lastAutoTable?.finalY ?? 110) + 35);
   doc.line(55, y, 155, y);
   doc.setFontSize(10);
+  doc.setTextColor(...TEXT);
   doc.text(labels.signature, 105, y + 7, { align: 'center' });
   await deliverPdf(doc, `recibo-${dados.pacienteNome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-')}-${dados.dataPagamento}.pdf`);
 }
@@ -351,6 +352,7 @@ export const exportarReciboFisioterapeutaPDF = (dados: {
   const y = Math.min(235, ((doc as any).lastAutoTable?.finalY ?? 90) + 35);
   doc.line(55, y, 155, y);
   doc.setFontSize(10);
+  doc.setTextColor(...TEXT);
   doc.text('Assinatura do Responsavel', 105, y + 7, { align: 'center' });
   save(doc, `recibo-${dados.nomeFisioterapeuta.replace(/\s/g, '-')}-${dados.periodo.replace(/\s/g, '-')}.pdf`);
 };

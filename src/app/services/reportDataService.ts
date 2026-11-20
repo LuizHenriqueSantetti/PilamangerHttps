@@ -40,9 +40,10 @@ export function getReportData(startValue: string, endValue: string, colors: stri
   const despesasCategorias = [...expenseMap].map(([name, value], index) => ({ name, value, color: colors[index % colors.length] }));
   const planMap = new Map<string, number>();
   plans.forEach(item => { const key = item.nomePlano || item.plano || 'Sem plano'; planMap.set(key, (planMap.get(key) || 0) + 1); });
-  const planoDistribuicao = [...planMap].map(([name, value], index) => ({ name, value, color: colors[index % colors.length] }));
+  const totalPlanLinks = [...planMap.values()].reduce((sum, value) => sum + value, 0);
+  const planoDistribuicao = [...planMap].map(([name, value], index) => ({ name, value, color: colors[index % colors.length], participacao: totalPlanLinks ? value / totalPlanLinks * 100 : 0 }));
   const professoresData = professionals.map(item => {
-    const professionalClasses = classes.filter(entry => entry.fisioterapeuta === item.nome || String(entry.profissionalId || '') === item.id);
+    const professionalClasses = classes.filter(entry => entry.profissionalId ? String(entry.profissionalId) === item.id : entry.fisioterapeuta === item.nome);
     return { nome: item.nome, aulas: professionalClasses.length, receita: professionalClasses.reduce((sum, entry) => sum + Number(entry.valorAula || 0), 0), satisfacao: item.avaliacao || 0 };
   });
   const matriculasMensais = months.map((mes, month) => ({

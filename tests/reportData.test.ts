@@ -25,4 +25,17 @@ describe('relatórios com dados persistidos e datas civis',()=>{
  it('retorna contadores zerados quando não existem agendamentos',()=>{
   expect(getReportData('2026-11-01','2026-11-30',['#087F8C']).appointmentSummary).toEqual({total:0,confirmados:0,pendentes:0,cancelados:0});
  });
+ it('distribui os vínculos entre planos sem usar pacientes sem plano no denominador',()=>{
+  localStorage.setItem('pacientes',JSON.stringify([{id:'a',status:'ativo'},{id:'b',status:'ativo'}]));
+  localStorage.setItem('planosAtribuidos',JSON.stringify([{pacienteId:'a',nomePlano:'Plano fictício'}]));
+  const report=getReportData('2026-11-01','2026-11-30',['#087F8C']);
+  expect(report.planoDistribuicao).toMatchObject([{name:'Plano fictício',value:1,participacao:100}]);
+ });
+ it('não atribui duas vezes a mesma aula a profissionais homônimos',()=>{
+  localStorage.setItem('profissionais',JSON.stringify([{id:'a',nome:'Profissional fictício',status:'ativo'},{id:'b',nome:'Profissional fictício',status:'ativo'}]));
+  localStorage.setItem('detalheAulasPagamento',JSON.stringify([{profissionalId:'a',fisioterapeuta:'Profissional fictício',data:'2026-11-20',valorAula:40}]));
+  const report=getReportData('2026-11-01','2026-11-30',['#087F8C']);
+  expect(report.professoresData.map(x=>x.aulas)).toEqual([1,0]);
+  expect(report.professoresData.map(x=>x.receita)).toEqual([40,0]);
+ });
 });

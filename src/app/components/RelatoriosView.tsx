@@ -166,7 +166,7 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
         doc.setFontSize(10); doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal');
         doc.text(`Professores Ativos: ${dadosGerais.professoresAtivos}/${dadosGerais.totalProfessores}`, 14, y); y += 6;
         doc.text(`Aulas Realizadas: ${dadosGerais.aulasRealizadas}`, 14, y); y += 6;
-        doc.text(`Taxa de Ocupação: ${dadosGerais.taxaOcupacao}%`, 14, y);
+        doc.text(`Taxa de Ocupação: ${formatPercent(dadosGerais.taxaOcupacao)}`, 14, y);
         finalizarPDF(doc);
         savePdfDocument(doc, `relatorio-geral-${dataAtual}.pdf`);
         break;
@@ -259,7 +259,7 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
           body: planoDistribuicao.map(p => [
             p.name,
             p.value.toString(),
-            `${((p.value / dadosGerais.totalAlunos) * 100).toFixed(1)}%`
+            `${p.participacao.toFixed(1)}%`
           ]),
           foot: [['Total', planoDistribuicao.reduce((acc, p) => acc + p.value, 0).toString(), '100%']],
           headStyles: { fillColor: [3, 140, 140], textColor: 255, fontStyle: 'bold' },
@@ -393,7 +393,7 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
                     {[
                       { label: 'Professores Ativos', value: `${dadosGerais.professoresAtivos}/${dadosGerais.totalProfessores}` },
                       { label: 'Aulas Realizadas',   value: String(dadosGerais.aulasRealizadas) },
-                      { label: 'Taxa de Ocupação',   value: `${dadosGerais.taxaOcupacao}%` },
+                      { label: 'Taxa de Ocupação',   value: formatPercent(dadosGerais.taxaOcupacao) },
                       { label: 'Alunos Ativos',      value: String(dadosGerais.alunosAtivos) },
                     ].map(item => (
                       <div key={item.label} className="flex justify-between items-center px-3 py-2.5 rounded-lg" style={{ backgroundColor: muted }}>
@@ -609,7 +609,7 @@ export function RelatoriosView({ isDark, perms }: RelatoriosViewProps) {
             <div className="rounded-xl p-5" style={{ backgroundColor: card, border: `1px solid ${border}` }}>
               <KpiRow items={[
                 { label: 'Aulas Realizadas', value: String(dadosGerais.aulasRealizadas),  color: P },
-                { label: 'Taxa de Ocupação', value: `${dadosGerais.taxaOcupacao}%`,       color: '#35A978' },
+                { label: 'Taxa de Ocupação', value: formatPercent(dadosGerais.taxaOcupacao), color: '#35A978' },
                 { label: 'Confirmados',      value: String(liveData.appointmentSummary.confirmados), sub: `${formatPercent(liveData.appointmentSummary.total ? liveData.appointmentSummary.confirmados / liveData.appointmentSummary.total * 100 : 0)} do total`, color: '#35A978' },
                 { label: 'Cancelamentos',    value: String(liveData.appointmentSummary.cancelados), sub: `${formatPercent(liveData.appointmentSummary.total ? liveData.appointmentSummary.cancelados / liveData.appointmentSummary.total * 100 : 0)} do total`, color: '#D95C5C' },
               ]} />
