@@ -23,9 +23,6 @@
         "src/*"
       ]
     },
-    "types": [
-      "@cloudflare/workers-types"
-    ],
     "incremental": true,
     "plugins": [
       {
@@ -39,7 +36,6 @@
     "app/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "db/**/*.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],

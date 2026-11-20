@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   const now = new Date().toISOString();
   if (now === grant.expectedUpdatedAt) return unavailable();
   const hash = await hashPassword(password);
-  // D1 batch is transactional. Every side effect requires the successful CAS timestamp.
+  // Database batch is transactional. Every side effect requires the successful CAS timestamp.
   const results = await env.DB.batch([
     env.DB.prepare(`UPDATE users SET password_hash = ?, must_change_password = 0, updated_at = ?
       WHERE id = ? AND updated_at = ? AND active = 1 AND role = 'gerencia'`)

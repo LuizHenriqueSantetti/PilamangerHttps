@@ -4,12 +4,11 @@ allowBuilds:
   core-js: true
   esbuild: true
   sharp: true
-  workerd: true
+  workerd: set this to true or false
 
 overrides:
   postcss: ^8.5.23
   source-map-js: ^1.2.2
   sharp: ^0.35.5
-  image-size: ^2.0.3
   dompurify: ^3.4.17
   fast-uri: ^3.1.9

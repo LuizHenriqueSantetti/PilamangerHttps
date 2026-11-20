@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const requestId = crypto.randomUUID();
     const guards = DEMO_KEYS.map(() => "COALESCE((SELECT value FROM app_storage WHERE key = ?), '') = ?").join(' AND ');
     const receipt = env.DB.prepare(`INSERT INTO demo_import_runs (id,request_id,user_id,created_at,summary) SELECT ?,?,?,?,? WHERE ${guards} AND NOT EXISTS (SELECT 1 FROM demo_import_runs WHERE id = ?) ON CONFLICT(id) DO NOTHING`).bind(DEMO_IMPORT_ID, requestId, auth.session.user.id, now.toISOString(), JSON.stringify(summary), ...DEMO_KEYS.flatMap(key => [key, raw[key] || '']), DEMO_IMPORT_ID);
-    // D1 batch is one transaction. Every write requires the unique receipt from this request.
+    // Database batch is one transaction. Every write requires the unique receipt from this request.
     const writes = DEMO_KEYS.filter(key => !['planos', 'profissionais'].includes(key)).map(key => env.DB.prepare('INSERT INTO app_storage (key,value,updated_at) SELECT ?,?,? WHERE EXISTS (SELECT 1 FROM demo_import_runs WHERE id = ? AND request_id = ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at').bind(key, JSON.stringify(collections[key]), now.toISOString(), DEMO_IMPORT_ID, requestId));
     const audit = env.DB.prepare('INSERT INTO audit_logs (id,user_id,action,module,record_id,metadata,created_at) SELECT ?,?,?,?,?,?,? WHERE EXISTS (SELECT 1 FROM demo_import_runs WHERE id = ? AND request_id = ?)').bind(crypto.randomUUID(), auth.session.user.id, 'Importação histórica única de demonstração autorizada', 'Teste', DEMO_IMPORT_ID, JSON.stringify(summary), now.toISOString(), DEMO_IMPORT_ID, requestId);
     const results = await env.DB.batch([receipt, ...writes, audit]);
