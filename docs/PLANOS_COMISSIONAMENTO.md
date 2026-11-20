@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Planos e integração financeira — 17/10/2026
 
 ## Alterações

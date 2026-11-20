@@ -1,24 +1,27 @@
-# Deploy
+# Publicação do PilaManager
 
-O projeto está vinculado ao OpenAI Sites por `.openai/hosting.json`. A plataforma empacota o build Vinext, aplica migrations e executa a aplicação em Cloudflare Workers com HTTPS.
+A aplicação e o PostgreSQL estão no Railway.
 
-## Antes de publicar
+[Endereço da demonstração](https://pilamanager-web-production.up.railway.app/)
 
-```bash
-pnpm typecheck
-pnpm test
-pnpm build
-```
+## Publicação automática
 
-Depois da publicação, valide pelo endereço real: página de login, bloqueio de APIs sem sessão, login inválido, login válido, troca obrigatória de senha, logout, persistência, perfis e operações críticas.
+Quando uma alteração de código é enviada para a versão principal (`main`) no GitHub, o GitHub Actions executa os testes, a conferência de tipos, a consulta de alertas nas bibliotecas e a preparação da aplicação.
 
-## Domínio próprio
+Se essas etapas passam, o código é publicado no Railway. O processo aguarda a aplicação iniciar e confere se o endereço HTTPS responde e se os dados continuam exigindo login.
 
-1. Confirme que `pilamanager.com.br` pertence à clínica.
-2. Adicione o domínio no projeto Sites.
-3. Copie exatamente os registros DNS informados pela plataforma para o provedor do domínio.
-4. Aguarde a validação e emissão do certificado.
-5. Configure o domínio principal e o redirecionamento de `www` conforme a plataforma permitir.
-6. Repita os testes de autenticação e cookies em ambos os endereços HTTPS.
+As instruções desse processo estão em [.github/workflows/railway.yml](../.github/workflows/railway.yml).
 
-Não marque o domínio como ativo antes da validação DNS e do certificado concluírem.
+Alterações apenas na documentação não geram uma nova publicação da aplicação.
+
+## Configurações
+
+O endereço do banco e as senhas são configurados fora dos arquivos públicos do código. O GitHub guarda a credencial da publicação como um segredo restrito ao projeto e ao ambiente usado.
+
+Na inicialização, a aplicação confere as atualizações necessárias no banco. A criação de contas fictícias depende da configuração `DEMO_MODE`.
+
+## Endereço e hospedagem
+
+Foi mantido o endereço do Railway com HTTPS, sem compra de domínio e sem contratação de plano pago. O teste gratuito está sujeito ao prazo e aos créditos disponíveis; ele não é uma garantia de hospedagem permanente.
+
+[Comandos e configurações da publicação](tecnica/EXECUCAO_E_PUBLICACAO.md)

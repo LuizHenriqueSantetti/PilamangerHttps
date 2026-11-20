@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Nova experiência — validação de 16/10/2026
 
 ## Publicação confirmada em 17/10/2026

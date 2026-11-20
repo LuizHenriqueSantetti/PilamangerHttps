@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Recuperação excepcional da conta principal
 
 O endpoint POST /api/auth/recovery fica desativado por padrão. Somente o titular da hospedagem pode provisionar o segredo OWNER_RECOVERY_GRANT no ambiente de produção.

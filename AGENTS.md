@@ -31,8 +31,9 @@ commit 184b6ea9e5aa24f18ec55cbecb1c35c5f59ea5cb. As notas D1 abaixo descrevem
 a origem. O usuário determinou exclusivamente dados fictícios nesta homologação.
 Não importar dados do Site original. Preservar a interface e os estilos.
 
-- A aplicação usa Vinext/React/Vite, APIs em Cloudflare Workers e banco gerenciado D1.
-- O D1 é a fonte oficial dos dados protegidos; `localStorage` é somente cache operacional e preferências do dispositivo.
+- A aplicação publicada usa Next.js/React, servidor Node.js e PostgreSQL no Railway.
+- O PostgreSQL é a fonte oficial dos dados protegidos; `localStorage` é somente cache operacional e preferências do dispositivo.
+- Os arquivos de D1 em `db/` e `drizzle/` e os registros sinalizados na documentação descrevem etapas anteriores.
 - Sessões, senhas, bloqueio de login, usuários, RBAC e auditoria são validados no servidor.
 - Toda nova operação sensível deve exigir sessão e autorização no endpoint, mesmo que a interface esconda o botão.
 - Não introduza dados fictícios para contornar infraestrutura ou em seeds públicas.

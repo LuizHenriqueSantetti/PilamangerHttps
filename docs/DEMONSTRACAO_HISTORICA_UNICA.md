@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Exceção única de demonstração — 22/10/2026
 
 Solicitada e autorizada pelo proprietário: oito clientes com nomes fornecidos, demais dados fictícios, aniversários e idades variados, pagamentos simulados anteriores a hoje e aulas em datas diferentes. Não representa atendimento, diagnóstico, consentimento dos titulares ou movimentação bancária real.

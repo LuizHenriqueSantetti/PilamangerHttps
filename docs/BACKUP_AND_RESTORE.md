@@ -1,33 +1,25 @@
-# Backup e restauração
+# Cópias de segurança
 
-O banco contém dados pessoais e financeiros. Todo backup deve ser tratado como dado sensível.
+Foi configurada uma rotina diária às **21h, no horário de São Paulo**, para copiar o banco do PilaManager para o computador.
 
-## Política recomendada
+A rotina depende do computador e do Codex disponíveis, de conexão com a internet e de acesso ao Railway. Ela não é um serviço de backup independente na nuvem.
 
-- Exportação diária, com retenção de 30 dias.
-- Uma cópia semanal criptografada em local separado da conta de hospedagem.
-- Acesso restrito à Gerência e ao responsável técnico.
-- Teste de restauração trimestral em ambiente isolado.
-- Registro de quem gerou, acessou ou restaurou cada cópia.
+## O que a rotina faz
 
-## Exportar
+O arquivo `scripts/backup-railway.mjs` cria uma cópia do espaço usado pelo PilaManager no PostgreSQL. Depois, confere se o arquivo pode ser lido pelas ferramentas do banco e registra a data, o tamanho e uma identificação de integridade chamada SHA-256.
 
-Use a ferramenta de exportação D1 da conta que hospeda o projeto e grave o arquivo fora desta pasta e fora do repositório:
+Os arquivos ficam em `.private/backups/`, fora do GitHub. A rotina não apaga cópias anteriores.
 
-```bash
-wrangler d1 export <DATABASE_NAME_OR_ID> --remote --output pilamanager-YYYY-MM-DD.sql
-```
+## O que foi testado
 
-Confirme que o arquivo não está vazio, calcule um checksum SHA-256, criptografe-o e envie-o ao cofre definido pela clínica. O nome ou ID real deve ser obtido no painel da hospedagem; não o inclua no código.
+A rotina foi executada e uma cópia foi restaurada em um banco local separado. As contas e o paciente fictício foram conferidos após a restauração. O banco temporário foi removido ao terminar o teste.
 
-## Restaurar
+O registro dessa verificação está no [relatório de validação](VALIDACAO_RAILWAY_NOVA_EXPERIENCIA.md).
 
-1. Interrompa gravações e gere um backup final do banco atual.
-2. Crie um banco D1 isolado para ensaiar a restauração.
-3. Importe o SQL com a ferramenta D1 da conta.
-4. Aplique migrations posteriores, se existirem.
-5. Valide contagens, relacionamentos, login e operações críticas.
-6. Só então altere o binding `DB` da produção em uma janela de manutenção.
-7. Monitore erros e preserve a cópia anterior para rollback.
+## Cuidados
 
-Nunca restaure diretamente sobre produção sem ensaio e sem cópia verificável do estado anterior.
+- As cópias do banco podem conter informações de acesso e não devem ser compartilhadas como parte do código.
+- Uma restauração deve ser testada em um banco separado antes de substituir dados em uso.
+- O funcionamento da rotina depende das condições descritas acima; um agendamento criado não prova que todas as execuções futuras acontecerão.
+
+[Guia com os comandos de apoio](tecnica/EXECUCAO_E_PUBLICACAO.md)

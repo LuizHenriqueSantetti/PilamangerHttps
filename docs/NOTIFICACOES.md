@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Notificações globais — Nova Experiência
 
 Implementação de 20/10/2026, somente nesta versão. Nenhuma migration ou mudança de acesso ao Site foi necessária.

@@ -1,73 +1,87 @@
-# PilaManager — Nova Experiência no Railway
+# PilaManager
 
-Cópia da fonte exata indicada pelo proprietário: versão 13 do Site
-https://pilamanager-nova-experiencia.luizsantetti.chatgpt.site/,
-commit de origem `184b6ea9e5aa24f18ec55cbecb1c35c5f59ea5cb`.
-O Site original e seu banco não foram alterados nem tiveram dados importados.
+Sistema de gestão para estúdios de Pilates, desenvolvido ao longo do semestre.
 
-Esta cópia usa Next.js/Node 22, React e PostgreSQL. Os componentes e estilos
-originais foram preservados. O adaptador em `src/server/runtime.ts` mantém
-os contratos existentes das APIs; sessões, usuários, auditoria e objetos de
-imagem ficam no PostgreSQL. Os módulos operacionais mantêm o modelo original
-de coleções JSON em `app_storage`, sem normalização relacional completa.
+O PilaManager reúne a agenda, os pacientes, a equipe e os pagamentos em um só lugar. A proposta é facilitar a rotina do estúdio e permitir que as informações de um cadastro sejam aproveitadas nas outras partes do sistema.
 
-Publicação de demonstração: https://pilamanager-web-production.up.railway.app/
-Somente dados fictícios. Consulte [o relatório desta validação](docs/VALIDACAO_RAILWAY_NOVA_EXPERIENCIA.md).
-Os demais documentos sobre Workers/D1 são registros históricos da origem.
+Por exemplo: ao cadastrar um paciente com um plano, o sistema cria o vínculo e a cobrança. Depois do recebimento, o valor aparece no Financeiro e nos relatórios.
 
-## Executar
+## Links do projeto
 
-Requisitos: Node 22 e pnpm (versão registrada em `packageManager`).
-Copie `.env.example` para `.env` e configure um PostgreSQL de teste.
+- [Acessar o PilaManager](https://pilamanager-web-production.up.railway.app/)
+- [Acompanhar as tarefas no Trello](https://trello.com/b/tFTm4z72/pilamanager-21)
+- [Repositório no GitHub](https://github.com/LuizHenriqueSantetti/pilamanager-nova-experiencia-postgres)
 
-```sh
-pnpm install --frozen-lockfile
-pnpm db:migrate
-pnpm dev
-```
+A versão publicada é uma demonstração com dados fictícios. O acesso é feito com uma conta autorizada; senhas não ficam no repositório.
 
-A migration cria somente o schema `pilamanager_nova_experiencia` por padrão.
-Não reutilize um schema de outra aplicação. Migrations PostgreSQL ficam em
-`postgres/`; `drizzle/` descreve o histórico D1 da origem e não é executado no Railway.
+![Visão geral do PilaManager com dados de demonstração](docs/imagens/visao-geral.jpg)
 
-Para produção, use o Dockerfile. A inicialização aplica migrations idempotentes,
-executa o seed apenas com `DEMO_MODE=true` e inicia o servidor na porta `PORT`.
-Defina `PUBLIC_ORIGIN` para o endereço HTTPS exato e `DATABASE_URL` para a rede
-privada PostgreSQL do Railway. Segredos nunca entram no Git ou na imagem.
+## O que o sistema faz
 
-## Verificação
+| Área | O que é possível fazer |
+| --- | --- |
+| Pacientes | Cadastrar, editar, acompanhar o histórico e vincular um plano. |
+| Equipe | Cadastrar profissionais, horários disponíveis e regras de comissão. |
+| Agenda | Organizar os atendimentos e consultar horários disponíveis. |
+| Planos | Definir os serviços, o valor, a duração e a quantidade de aulas. |
+| Cobranças | Acompanhar o que está pendente e registrar recebimentos. |
+| Comissões | Calcular os valores das aulas e acompanhar os pagamentos aos profissionais. |
+| Financeiro | Consultar entradas, saídas e saldo. |
+| Relatórios | Filtrar informações e gerar relatórios e recibos em PDF. |
+| Usuários | Separar o acesso de gerência, administração, recepção e fisioterapeutas. |
 
-```sh
-pnpm typecheck
-pnpm test
-pnpm build
-pnpm audit --prod
-```
+O sistema também tem busca, modo claro e escuro e telas adaptadas para celular.
 
-Scripts `verify-local-api.mjs` e `verify-billing-local.mjs` aceitam somente
-localhost e exigem `.private/qa.json` com contas fictícias. `verify-https.mjs`
-aceita apenas o endereço desta demonstração e lê credenciais locais ignoradas.
-Os testes HTTP complementam os testes unitários; não são uma certificação de
-segurança ou homologação clínica completa. O projeto não possui ESLint configurado.
+## Ferramentas usadas
 
-## Operação e backup
+| Ferramenta | Como entrou no projeto |
+| --- | --- |
+| [Trello](https://trello.com/b/tFTm4z72/pilamanager-21) | Organização das tarefas e acompanhamento do trabalho do semestre. |
+| [Figma Make](https://www.figma.com/make/) | Base das primeiras telas e de componentes do protótipo. |
+| Git e GitHub | Histórico das alterações e organização do código. |
+| PostgreSQL | Banco de dados usado na versão publicada. |
+| Railway | Hospedagem da aplicação e do banco de dados. |
+| ChatGPT e Codex | Apoio na organização das ideias, na programação, na revisão de erros e nos testes. |
 
-Não foi ativado plano pago. O endereço Railway fornece HTTPS sem compra de domínio.
-O trial não oferece backups nativos nesta conta. Foi configurado um backup
-diário local pelo Codex às 21h (America/Sao_Paulo), com `scripts/backup-railway.mjs`.
-Depende deste computador/Codex disponíveis, rede e autenticação Railway ativa.
-Cada dump fica em `.private/backups/`, é validado com pg_restore e recebe SHA-256.
-Nenhum backup é apagado automaticamente. Uma execução já foi restaurada de verdade.
-O script `verify-backup-local.mjs` restaura esse dump somente em banco temporário
-local e remove exclusivamente o banco temporário que ele próprio cria.
+A aplicação usa TypeScript, React, Next.js, Node.js e Tailwind CSS. Os testes usam Vitest, e a publicação automática é feita pelo GitHub Actions. O Docker organiza o ambiente usado para colocar a aplicação no ar.
 
-A publicação automática usa GitHub Actions e a CLI oficial após testes, TypeScript,
-auditoria de produção e build. O proprietário autorizou uma credencial limitada
-ao projeto/ambiente production, guardada somente no secret `RAILWAY_TOKEN` do
-repositório privado. O fluxo aguarda o Railway ficar saudável e confere HTTPS e
-autenticação. A primeira execução real passou. Não há dependência de autorizar
-o Railway GitHub App. Não publique `.env*`, `.private/`, dumps ou chaves.
+Os detalhes de cada ferramenta estão em [Ferramentas do projeto](docs/projeto/FERRAMENTAS.md).
 
-O trial termina ao consumir os créditos ou o prazo. Nenhum plano pago foi ativado.
-O plano Free exige transição pelo painel e redeploy; tem limites e pode suspender
-o serviço quando seu crédito mensal acaba. Isso não é garantia de operação contínua.
+## Banco de dados
+
+A versão atual usa **PostgreSQL no Railway**. Os dados ficam no servidor, para que o acesso não dependa de um único navegador.
+
+Usuários, acessos, registros de alterações e arquivos têm suas próprias tabelas. Os cadastros e as movimentações ainda são guardados em grupos por módulo, na tabela `app_storage`. Essa parte continua como um ponto de evolução do projeto.
+
+[Entenda como os dados são guardados](docs/projeto/BANCO_DE_DADOS.md).
+
+## Como o repositório está organizado
+
+| Pasta | Conteúdo |
+| --- | --- |
+| `src/app` | Telas, regras de funcionamento e componentes do sistema. |
+| `src/styles` | Cores, estilos e adaptação das telas. |
+| `app/api` | Recebe os pedidos da aplicação e confere o acesso aos dados. |
+| `src/server` | Regras executadas no servidor, como login e permissões. |
+| `postgres` | Arquivos que criam e atualizam o banco atual. |
+| `tests` | Testes automatizados. |
+| `scripts` | Rotinas de apoio para publicação, banco e backup. |
+| `docs` | Apresentação, ferramentas, banco e orientações de uso. |
+| `.github/workflows` | Verificações e publicação automática pelo GitHub. |
+
+## Para conhecer ou executar o projeto
+
+- [Apresentação e principais fluxos](docs/projeto/APRESENTACAO.md)
+- [Ferramentas usadas durante o desenvolvimento](docs/projeto/FERRAMENTAS.md)
+- [Banco de dados](docs/projeto/BANCO_DE_DADOS.md)
+- [Como executar no computador](docs/tecnica/COMO_RODAR.md)
+- [Testes realizados e limites da versão](docs/VALIDACAO_RAILWAY_NOVA_EXPERIENCIA.md)
+- [Índice da documentação](docs/README.md)
+
+A última conferência registrada, em **20/11/2026**, teve 114 testes automatizados aprovados. Também foram feitos testes com o banco, com as contas de acesso e com os relatórios em PDF. O relatório acima explica o que foi testado e o que ainda precisa evoluir.
+
+## Autoria
+
+Projeto de **Luiz Henrique Santetti**.
+
+Os créditos de componentes e materiais da base visual estão em [ATTRIBUTIONS.md](ATTRIBUTIONS.md).

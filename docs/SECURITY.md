@@ -1,31 +1,23 @@
-# Segurança
+# Acesso e cuidados com os dados
 
-## Controles implementados
+## Contas e permissões
 
-- HTTPS fornecido pela hospedagem em produção.
-- Cookie de sessão `HttpOnly`, `Secure` em produção e `SameSite=Lax`.
-- Token aleatório de 256 bits; somente seu hash é armazenado no banco.
-- Senhas derivadas com quatro etapas encadeadas de PBKDF2-SHA256, salt aleatório e 400.000 iterações efetivas, respeitando o limite de 100.000 por chamada do runtime.
-- Sessões normais de 12 horas e opção “lembrar” de 30 dias.
-- Bloqueio de 15 minutos após cinco tentativas inválidas.
-- Validação de origem nas mutações para reduzir CSRF.
-- Validação de entrada e consultas parametrizadas para impedir injeção SQL.
-- RBAC e listas de acesso a dados aplicadas no servidor.
-- CSP, bloqueio de frames, `nosniff`, política de referenciador e permissões restritas.
-- Erros públicos genéricos e logs sem senhas ou tokens.
-- Auditoria de login, logout, alterações de senha, usuários e gravações.
-- Troca obrigatória da senha temporária no primeiro acesso.
-- Inicialização da primeira conta protegida por segredo temporário da hospedagem; o segredo é removido após o uso.
+O PilaManager usa contas individuais com os perfis de gerência, administração, recepção e fisioterapeuta. O servidor confere o perfil antes de permitir uma operação.
 
-## Regras operacionais
+As senhas são guardadas de forma protegida, sem o texto original. A sessão de acesso fica no banco, e o navegador recebe uma identificação de sessão. Na publicação HTTPS, essa identificação usa as proteções Secure, HttpOnly e SameSite=Lax.
 
-- Não utilizar dados reais em seeds, testes ou screenshots públicos.
-- Inativar imediatamente contas desligadas da clínica.
-- Conceder o menor perfil necessário.
-- Não enviar senha temporária e endereço do sistema no mesmo canal.
-- Revisar periodicamente usuários, auditoria e sessões.
-- Para LGPD, definir formalmente controlador, operadores, retenção, atendimento ao titular e resposta a incidentes.
+Também há bloqueio após tentativas inválidas de entrada, conferência da origem dos pedidos e registro de ações realizadas no sistema. Senhas temporárias criadas pela administração precisam ser trocadas no primeiro acesso.
 
-## Limitação conhecida
+## Dados de demonstração
 
-Não há provedor de e-mail configurado. A recuperação de acesso deve ser feita pela Gerência, que redefine a senha temporária na administração; o usuário será forçado a alterá-la no próximo login.
+A versão de demonstração e seus testes usam dados fictícios. Senhas, chaves de acesso, arquivos locais de configuração e cópias do banco não são enviados ao GitHub.
+
+## Recuperação de acesso
+
+Não há envio automático de e-mail para recuperar senha. A gerência deve fazer a redefinição pela área de usuários. O usuário troca a senha temporária ao entrar novamente.
+
+## Limites
+
+Ter login e permissões não significa que toda situação de segurança já foi avaliada. O projeto não passou por uma certificação de segurança ou de uso clínico. O uso com dados reais exige uma preparação própria para essa operação.
+
+[Consultar os testes e os limites registrados](VALIDACAO_RAILWAY_NOVA_EXPERIENCIA.md)

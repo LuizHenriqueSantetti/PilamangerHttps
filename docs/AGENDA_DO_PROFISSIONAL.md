@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](README.md).
+
 # Consulta de aulas pela Equipe - 22/10/2026
 
 Em Equipe, o botão **Ver agenda** no cartão de cada profissional abre uma consulta por Semana ou Mês. As setas mudam o período e Hoje retorna à data atual. O nome do profissional fica no cabeçalho; o calendário indica dias com aulas e permite filtrar um dia ou retornar a Todos os dias.

@@ -1,3 +1,5 @@
+> Registro de uma etapa anterior. Para a versão atual com PostgreSQL no Railway, consulte o [índice da documentação](../README.md).
+
 # Contexto técnico do PilaManager 2.1
 
 Última auditoria: 2026-06-29.
