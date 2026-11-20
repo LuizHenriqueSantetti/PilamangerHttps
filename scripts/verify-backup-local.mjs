@@ -1,11 +1,13 @@
 // Restaura exclusivamente o dump fictício autorizado em banco local temporário.
 import pg from'pg';import{spawnSync}from'node:child_process';import assert from'node:assert/strict';
-import{writeFileSync}from'node:fs';
+import{writeFileSync}from'node:fs';import{resolve,sep}from'node:path';
+const backup=resolve(process.argv[2]||'.private/pilamanager-nova-demo.dump');
+assert.ok(backup.startsWith(resolve('.private')+sep),'Somente arquivos privados de backup são permitidos.');
 const url=new URL(process.env.DATABASE_URL);assert.equal(url.hostname,'127.0.0.1');
 const database='pila_restore_qa_'+Date.now(),admin=new pg.Client({connectionString:url.href});await admin.connect();
 try{
  await admin.query(`CREATE DATABASE "${database}"`);
- const r=spawnSync('C:/Program Files/PostgreSQL/17/bin/pg_restore.exe',['--exit-on-error','--no-owner','--no-acl','-h',url.hostname,'-p',url.port,'-U',decodeURIComponent(url.username),'-d',database,'.private/pilamanager-nova-demo.dump'],{env:{...process.env,PGPASSWORD:decodeURIComponent(url.password)},encoding:'utf8',windowsHide:true});
+ const r=spawnSync('C:/Program Files/PostgreSQL/17/bin/pg_restore.exe',['--exit-on-error','--no-owner','--no-acl','-h',url.hostname,'-p',url.port,'-U',decodeURIComponent(url.username),'-d',database,backup],{env:{...process.env,PGPASSWORD:decodeURIComponent(url.password)},encoding:'utf8',windowsHide:true});
  if(r.status!==0)throw Error('Falha no restore: '+r.stderr.slice(0,700));
  const restoredUrl=new URL(url);restoredUrl.pathname='/'+database;
  const restored=new pg.Client({connectionString:restoredUrl.href});await restored.connect();
